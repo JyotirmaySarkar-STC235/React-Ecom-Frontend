@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@media (width < 64rem) {
+  body:has(#mobile-drawer[data-open]) {
+    overflow: hidden;
+  }
+}
