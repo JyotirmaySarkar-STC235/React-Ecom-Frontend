@@ -111,7 +111,7 @@ const Header = ({ cartCount = 0 }) => {
           <p className="truncate">Get up to 50% off new season styles, limited time only</p>
           <ul className="hidden shrink-0 gap-6 sm:flex">
             <li><Link to="/help" className="hover:text-red-500">Help Center</Link></li>
-            <li><Link to="/order-tracking" className="hover:text-red-500">Order Tracking</Link></li>
+            <li><Link to="/orders" className="hover:text-red-500">Order Tracking</Link></li>
           </ul>
         </div>
       </div>
