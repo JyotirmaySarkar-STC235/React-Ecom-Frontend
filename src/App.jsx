@@ -11,7 +11,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Header />
-      <main className="mx-auto max-w-7xl px-4 py-8">
+      <main className="">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/wishlist" element={<Wishlist />} />
