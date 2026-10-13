@@ -1,4 +1,6 @@
 import HeroSlider from "../components/HeroSlider";
+import CategorySlider from "../components/CategorySlider";
+import { CATEGORY_LINKS } from "../utils/categories";
 
 const HOME_SLIDES = [
   { desktop: "/desktop-banner-1.webp", mobile: "/mobile-banner-1.webp", alt: "Hero Slider Image 1" },
@@ -16,8 +18,7 @@ const Home = () => (
     <div id="home-page-main-wrapper">
       <title>ClassyShop | Big Mega Store</title>
       <HeroSlider slides={HOME_SLIDES} options={HOME_SLIDER_OPTIONS} />
-      <div className="width-full h-[1000px] bg-green-500"></div>
-      <HeroSlider id="slider-2" slides={HOME_SLIDES} options={HOME_SLIDER_OPTIONS} />
+      <CategorySlider categories={CATEGORY_LINKS} />
     </div>
   </>
 );

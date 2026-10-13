@@ -2,22 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import HeaderNav from './HeaderNav'
 import { CartIcon, ChevronDownIcon, CloseIcon, HeartIcon, LogoIcon, MenuIcon, RocketIcon, SearchIcon } from '../utils/icons'
+import { CATEGORY_LINKS } from '../utils/categories'
 
-const CATEGORIES = [
-  { label: 'Fashion', children: ['Men', 'Women', 'Kids', 'Boys', 'Girls'] },
-  { label: 'Bags', children: ['Handbags', 'Backpacks', 'Wallets', 'Travel Bags'] },
-  { label: 'Footwear', children: ['Men', 'Women', 'Kids'] },
-  { label: 'Groceries' },
-  { label: 'Wellness' },
-  { label: 'Jewellery', children: ['Necklaces', 'Earrings', 'Rings', 'Bracelets'] },
-  { label: 'Beauty' },
-  { label: 'Electronics', children: ['Mobiles', 'Laptops', 'Headphones', 'Smart Watches'] },
-]
-const toSlug = (text) => text.toLowerCase().replaceAll(' ', '-')
-const CATEGORY_LINKS = CATEGORIES.map(({ label, children = [] }) => {
-  const to = `/category/${toSlug(label)}`
-  return { to, label, children: children.map((child) => ({ to: `${to}/${toSlug(child)}`, label: child })) }
-})
 const NAV_LINKS = [{ to: '/', label: 'Home' }, ...CATEGORY_LINKS]
 
 const navLinkClass = ({ isActive }) =>
