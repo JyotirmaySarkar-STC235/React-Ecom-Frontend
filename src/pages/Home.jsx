@@ -3,6 +3,10 @@ import CategorySlider from "../components/CategorySlider";
 import FreeShippingBanner from "../components/FreeShippingBanner";
 import StoryBanner from "../components/StoryBanner";
 import { CATEGORY_LINKS } from "../utils/categories";
+import { FashionCollection, BagsCollection, FootwearCollection } from "../utils/collections";
+import { use, useEffect } from "react";
+import CollectionProducts from "../components/CollectionProducts";
+
 
 const HOME_SLIDES = [
   { desktop: "/desktop-banner-1.webp", mobile: "/mobile-banner-1.webp", alt: "Hero Slider Image 1" },
@@ -46,16 +50,23 @@ const STORY_BANNERS = {
   ],
 };
 
-const Home = () => (
-  <>
+const Home = () => {
+  useEffect(() => {
+    console.log(FashionCollection.label);
+    console.log(BagsCollection.label);
+    console.log(FootwearCollection.label);
+  }, []);
+  
+  return (
     <div id="home-page-main-wrapper">
       <title>ClassyShop | Big Mega Store</title>
       <HeroSlider slides={HOME_SLIDES} options={HOME_SLIDER_OPTIONS} />
       <CategorySlider categories={CATEGORY_LINKS} />
       <FreeShippingBanner />
       <StoryBanner {...STORY_BANNERS} />
+      <CollectionProducts collection={FashionCollection} />
     </div>
-  </>
-);
+  )
+}
 
 export default Home;

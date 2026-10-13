@@ -45,15 +45,17 @@ const HeroSlider = ({ id = "hero-slider-main-wrapper", slides = [], options = {}
         {slides.map(({ desktop, mobile, alt = "" }, index) => (
           <SwiperSlide key={index}>
             <picture>
-              <source srcSet={desktop} media="(min-width: 769px)" />
-              <source srcSet={mobile} media="(max-width: 768px)" />
+              <source srcSet={desktop} media="(min-width: 769px)" width="1400" height="694" />
+              <source srcSet={mobile} media="(max-width: 768px)" width="475" height="780" />
               <img
                 src={desktop}
                 alt={alt}
+                width="1400"
+                height="694"
                 className="h-auto w-full"
                 loading={index === 0 ? "eager" : "lazy"}
                 fetchPriority={index === 0 ? "high" : "auto"}
-                decoding="async"
+                decoding={index === 0 ? "sync" : "async"}
               />
             </picture>
           </SwiperSlide>
