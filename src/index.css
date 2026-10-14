@@ -21,3 +21,6 @@ input[type="search"]::-webkit-search-cancel-button {
     background-color: #e0e0e0;
   }
 }
+a, button {
+  cursor: pointer;
+}
