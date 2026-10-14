@@ -3,8 +3,7 @@ import CategorySlider from "../components/CategorySlider";
 import FreeShippingBanner from "../components/FreeShippingBanner";
 import StoryBanner from "../components/StoryBanner";
 import { CATEGORY_LINKS } from "../utils/categories";
-import { FashionCollection, BagsCollection, FootwearCollection } from "../utils/collections";
-import { use, useEffect } from "react";
+import { FashionCollection, FootwearCollection, BagsCollection } from "../utils/collections";
 import CollectionProducts from "../components/CollectionProducts";
 
 
@@ -51,12 +50,6 @@ const STORY_BANNERS = {
 };
 
 const Home = () => {
-  useEffect(() => {
-    console.log(FashionCollection.label);
-    console.log(BagsCollection.label);
-    console.log(FootwearCollection.label);
-  }, []);
-  
   return (
     <div id="home-page-main-wrapper">
       <title>ClassyShop | Big Mega Store</title>
@@ -65,6 +58,8 @@ const Home = () => {
       <FreeShippingBanner />
       <StoryBanner {...STORY_BANNERS} />
       <CollectionProducts collection={FashionCollection} />
+      <CollectionProducts collection={BagsCollection} />
+      <CollectionProducts collection={FootwearCollection} />
     </div>
   )
 }
