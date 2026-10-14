@@ -22,7 +22,7 @@ const Product2 = {
 const FashionCollection = {
     label: "Fashion",
     id: "fashion-collection",
-    products: [Product1, Product2, Product1]
+    products: [Product1, Product2, Product1, Product2, Product1,Product2, Product1,Product2, Product1, ]
 }
 const BagsCollection = {
     label: "Bags",

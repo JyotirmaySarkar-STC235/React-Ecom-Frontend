@@ -5,6 +5,10 @@ import StoryBanner from "../components/StoryBanner";
 import { CATEGORY_LINKS } from "../utils/categories";
 import { FashionCollection, FootwearCollection, BagsCollection } from "../utils/collections";
 import CollectionProducts from "../components/CollectionProducts";
+import TabSlider from "../components/TabSlider";
+
+// ponytail: label-only tabs render skeletons until real collection data (with products) is passed in.
+const POPULAR_TABS = CATEGORY_LINKS.slice(1).map(({ label }) => ({ id: `${label.toLowerCase()}-collection`, label }));
 
 
 const HOME_SLIDES = [
@@ -57,6 +61,7 @@ const Home = () => {
       <CategorySlider categories={CATEGORY_LINKS} />
       <FreeShippingBanner />
       <StoryBanner {...STORY_BANNERS} />
+      <TabSlider firstTabColection={FashionCollection} reseCollectionHandles={POPULAR_TABS} />
       <CollectionProducts collection={FashionCollection} />
       <CollectionProducts collection={BagsCollection} />
       <CollectionProducts collection={FootwearCollection} />
