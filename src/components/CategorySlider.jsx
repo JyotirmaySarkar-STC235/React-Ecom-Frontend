@@ -3,6 +3,7 @@ import { Navigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import CategoryCard from './CategoryCard'
+import { useId } from 'react'
 
 const BREAKPOINTS = {
   0: { slidesPerView: 3 },
@@ -11,12 +12,12 @@ const BREAKPOINTS = {
   1024: { slidesPerView: 8 },
 }
 
-const CategorySlider = ({ id = 'category-slider', categories = [], options = {} }) => {
+const CategorySlider = ({ id, categories = [], options = {} }) => {
+  const fallbackId = useId()
   if (!categories.length) return null
-
   return (
     <section
-      id={id}
+      id={id ?? fallbackId}
       aria-label="Shop by category"
       className="bg-gray-100 p-4 [--swiper-navigation-size:20px] [--swiper-theme-color:var(--color-gray-800)] [&_.swiper-button-disabled]:invisible"
     >

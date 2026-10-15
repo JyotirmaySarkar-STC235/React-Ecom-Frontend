@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -11,7 +11,8 @@ const DEFAULT_AUTOPLAY = {
   pauseOnMouseEnter: true,
 };
 
-const HeroSlider = ({ id = "hero-slider-main-wrapper", slides = [], options = {} }) => {
+const HeroSlider = ({ id, slides = [], options = {} }) => {
+  const fallbackId = useId();
   const wrapperRef = useRef(null);
   const swiperRef = useRef(null);
   const { autoplay, ...swiperOptions } = options;
@@ -34,7 +35,7 @@ const HeroSlider = ({ id = "hero-slider-main-wrapper", slides = [], options = {}
   if (!hasSlides) return null;
 
   return (
-    <div id={id} ref={wrapperRef}>
+    <div id={id ?? fallbackId} ref={wrapperRef}>
       <Swiper
         onSwiper={(swiper) => (swiperRef.current = swiper)}
         modules={[Navigation, Autoplay]}

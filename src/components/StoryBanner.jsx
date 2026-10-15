@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { Link } from 'react-router-dom'
 
 const BannerCard = ({ banner, isMain, className = '' }) => {
@@ -42,11 +43,12 @@ const BannerCard = ({ banner, isMain, className = '' }) => {
   )
 }
 
-const StoryBanner = ({ id = 'story-banner-main-wrapper', main, side = [] }) => {
+const StoryBanner = ({ id, main, side = [] }) => {
+  const fallbackId = useId()
   if (!main) return null
 
   return (
-    <section id={id} aria-label="Featured offers" className="w-full flex-col lg:flex-row gap-4 flex p-4">
+    <section id={id ?? fallbackId} aria-label="Featured offers" className="w-full flex-col lg:flex-row gap-4 flex p-4">
       <BannerCard
         banner={main}
         isMain

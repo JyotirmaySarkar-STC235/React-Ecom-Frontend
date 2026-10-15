@@ -57,14 +57,14 @@ const Home = () => {
   return (
     <div id="home-page-main-wrapper">
       <title>ClassyShop | Big Mega Store</title>
-      <HeroSlider slides={HOME_SLIDES} options={HOME_SLIDER_OPTIONS} />
-      <CategorySlider categories={CATEGORY_LINKS} />
-      <FreeShippingBanner />
-      <StoryBanner {...STORY_BANNERS} />
-      <TabSlider firstTabColection={FashionCollection} reseCollectionHandles={POPULAR_TABS} />
-      <CollectionProducts collection={FashionCollection} />
-      <CollectionProducts collection={BagsCollection} />
-      <CollectionProducts collection={FootwearCollection} />
+      <HeroSlider id="home-hero-slider" slides={HOME_SLIDES} options={HOME_SLIDER_OPTIONS} />
+      <CategorySlider id="home-category-slider" categories={CATEGORY_LINKS} />
+      <FreeShippingBanner id="home-free-shipping-banner" />
+      <StoryBanner id="home-story-banner" {...STORY_BANNERS} />
+      <TabSlider id="home-popular-products" firstTabColection={FashionCollection} reseCollectionHandles={POPULAR_TABS} />
+      <CollectionProducts id={`home-${FashionCollection.id}`} collection={FashionCollection} />
+      <CollectionProducts id={`home-${BagsCollection.id}`} collection={BagsCollection} />
+      <CollectionProducts id={`home-${FootwearCollection.id}`} collection={FootwearCollection} />
     </div>
   )
 }

@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useId } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import CollectionProducts from './CollectionProducts'
 import { PRODUCT_SLIDER_BREAKPOINTS } from '../utils/sliders'
+
 
 const SKELETON_COUNT = 7
 
@@ -27,6 +28,7 @@ const SkeletonProductsSlider = () => (
 )
 
 const TabSlider = ({
+  id,
   title = 'Popular Products',
   subtitle = 'Do not miss the current offers until the end of March.',
   firstTabColection = {},
@@ -35,9 +37,12 @@ const TabSlider = ({
   const [activeTab, setActiveTab] = useState(0)
   const tabs = [firstTabColection, ...reseCollectionHandles]
   const activeCollection = tabs[activeTab]
+  const fallbackId = useId()
+  const sectionId = id ?? fallbackId
+  const panelId = `${sectionId}-panel`
 
   return (
-    <section id="tab-slider" className="pt-8">
+    <section id={sectionId} className="pt-8">
       <div className="flex flex-col gap-4 px-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h2 className="text-xl font-semibold text-gray-800 md:text-2xl">{title}</h2>
@@ -52,7 +57,7 @@ const TabSlider = ({
                 type="button"
                 role="tab"
                 aria-selected={isActive}
-                aria-controls="tab-slider-panel"
+                aria-controls={panelId}
                 onClick={() => setActiveTab(index)}
                 className={`shrink-0 border-b-2 px-4 py-3 text-sm font-medium uppercase transition-colors ${
                   isActive ? 'border-red-500 text-red-500' : 'border-transparent text-gray-700 hover:text-red-500'
@@ -64,7 +69,7 @@ const TabSlider = ({
           })}
         </div>
       </div>
-      <div id="tab-slider-panel" role="tabpanel" aria-label={activeCollection.label}>
+      <div id={panelId} role="tabpanel" aria-label={activeCollection.label}>
         {activeCollection.products?.length ? (
           <CollectionProducts key={activeCollection.id} collection={activeCollection} showLabel={false} />
         ) : (
