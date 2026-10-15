@@ -11,7 +11,7 @@ const navLinkClass = ({ isActive }) =>
     isActive ? 'text-red-500' : 'text-gray-800'
   }`
 
-const Logo = ({ id, onClick }) => (
+export const Logo = ({ id, onClick }) => (
   <Link id={id} to="/" className="flex shrink-0 items-center gap-1" aria-label="ClassyShop home" onClick={onClick}>
     <LogoIcon />
     <span className="leading-none">

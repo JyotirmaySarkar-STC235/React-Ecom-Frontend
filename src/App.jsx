@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Header from './components/Header'
+import Footer from './components/Footer'
 import Home from './pages/Home'
 import ProductDetailsPage from './pages/ProductDetailsPage'
 import Wishlist from './pages/Wishlist'
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+      <Footer id="footer" />
     </BrowserRouter>
   )
 }
