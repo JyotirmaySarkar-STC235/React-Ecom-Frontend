@@ -14,6 +14,7 @@ export const product1 = {
     size: "M",
     quantity: 10,
     sold: 10,
+    // relatedProducts: [product2, product3, product4, product5],
 }
 export const product2 = {
     id: "_2",
