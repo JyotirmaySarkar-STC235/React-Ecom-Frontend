@@ -7,6 +7,7 @@ import Cart from './pages/Cart'
 import Orders from './pages/Orders'
 import Help from './pages/Help'
 import NotFound from './pages/NotFound'
+import CollectionsPage from './pages/CollectionsPage'
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
     children: [
       { path: '/', element: <Home /> },
       { path: '/products/:id', element: <ProductDetailsPage /> },
+      { path: '/collections/:handle', element: <CollectionsPage /> },
       { path: '/wishlist', element: <Wishlist /> },
       { path: '/cart', element: <Cart /> },
       { path: '/orders', element: <Orders /> },

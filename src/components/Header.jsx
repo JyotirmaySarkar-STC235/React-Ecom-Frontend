@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import HeaderNav from './HeaderNav'
 import { CartIcon, ChevronDownIcon, CloseIcon, HeartIcon, LogoIcon, MenuIcon, RocketIcon, SearchIcon } from '../utils/icons'
 import { CATEGORY_LINKS } from '../utils/categories'
+import { selectCartCount } from '../store/slices/cartSlice'
 
 const NAV_LINKS = [{ to: '/', label: 'Home' }, ...CATEGORY_LINKS]
 
@@ -37,7 +39,8 @@ const SearchForm = ({ id, onSearch, className }) => (
   </form>
 )
 
-const Header = ({ cartCount = 0 }) => {
+const Header = () => {
+  const cartCount = useSelector(selectCartCount)
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const menuButtonRef = useRef(null)
@@ -129,11 +132,9 @@ const Header = ({ cartCount = 0 }) => {
             aria-label={`Cart, ${cartCount} ${cartCount === 1 ? 'item' : 'items'}`}
           >
             <CartIcon />
-            {cartCount > 0 && (
               <span className="absolute -top-1 -right-1 flex size-5 items-center justify-center rounded-full bg-red-500 text-[10px] text-white" aria-hidden="true">
                 {cartCount > 99 ? '99+' : cartCount}
               </span>
-            )}
           </Link>
         </div>
       </div>
