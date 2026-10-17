@@ -1,7 +1,7 @@
 export const product1 = {
     id: "_1",
     name: "Duppy Product 1",
-    description: "This is a duppy product 1",
+    description: "This is a duppy product 1. Meet Earth Rhythm’s Rosy Ritual Glow Tinted Sunscreen — a clean, skin-loving SPF that does more than just protect. Powered by Vitamin C, Carrot Extract, and Kakadu Plum, it brightens dull skin while shielding against UV and pollution damage. The lightweight, skin-blurring tint evens out your complexion with a soft, rosy finish — no white cast, no heaviness. Enriched with hydrating Glycerin and Betaine, it keeps your skin supple, smooth, and radiant all day long. Free from silicones, oxybenzone, and phthalates, this daily-wear sunscreen leaves your skin glowing with clean, conscious care.",
     price: 1000,
     compareAtPrice: 1500,
     image: "https://placehold.co/900x768?text=Featured image",
