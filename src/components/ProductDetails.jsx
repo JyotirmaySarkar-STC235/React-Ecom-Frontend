@@ -3,6 +3,7 @@ import PDPPrice from './PDPPrice'
 import PDPAddToCart from './PDPAddToCart'
 import ProductDescription from './ProductDescription'
 import { StarIcon } from '../utils/icons'
+import Accordion from './Accordion'
 
 const ProductDetails = ({ classes = '', productDetails = {} }) => {
   let classList = 'product-details ' + classes
@@ -25,7 +26,7 @@ const ProductDetails = ({ classes = '', productDetails = {} }) => {
         </p>
       )}
       <PDPAddToCart maxQuantity={quantity || 10} />
-      <ProductDescription description={description} />
+      <Accordion heading="Product Details" body={description} />
     </div>
   )
 }

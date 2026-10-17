@@ -1,10 +1,18 @@
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
+import { addToCart } from '../hooks/Cart'
 
 const PDPAddToCart = ({ maxQuantity = 10 }) => {
   const [quantity, setQuantity] = useState(1)
+  const [isPending, startTransition] = useTransition()
 
   const decrease = () => setQuantity((value) => Math.max(1, value - 1))
   const increase = () => setQuantity((value) => Math.min(maxQuantity, value + 1))
+
+  const handleAddToCart = () => {
+    startTransition(async () => {
+      await addToCart(quantity)
+    })
+  }
 
   return (
     <div className="pdp-add-to-cart flex items-center gap-3">
@@ -13,7 +21,7 @@ const PDPAddToCart = ({ maxQuantity = 10 }) => {
           type="button"
           className="quantity-selector-button flex size-8 items-center justify-center text-lg text-gray-800 disabled:opacity-40"
           onClick={decrease}
-          disabled={quantity <= 1}
+          disabled={isPending || quantity <= 1}
           aria-label="Decrease quantity"
         >
           −
@@ -25,7 +33,7 @@ const PDPAddToCart = ({ maxQuantity = 10 }) => {
           type="button"
           className="quantity-selector-button flex size-8 items-center justify-center text-lg text-gray-800 disabled:opacity-40"
           onClick={increase}
-          disabled={quantity >= maxQuantity}
+          disabled={isPending || quantity >= maxQuantity}
           aria-label="Increase quantity"
         >
           +
@@ -33,9 +41,12 @@ const PDPAddToCart = ({ maxQuantity = 10 }) => {
       </div>
       <button
         type="button"
-        className="add-to-cart-button h-11 flex-1 rounded-full bg-orange-500 px-6 text-sm font-semibold tracking-wide text-white uppercase transition-colors hover:bg-orange-600"
+        onClick={handleAddToCart}
+        disabled={isPending}
+        aria-busy={isPending}
+        className="add-to-cart-button flex h-11 flex-1 items-center justify-center rounded-full bg-orange-500 px-6 text-sm font-semibold tracking-wide text-white uppercase transition-colors hover:bg-orange-600 disabled:cursor-wait disabled:opacity-80"
       >
-        Add to cart
+        {isPending ? <span className="loading">Loading...</span> : <span>Add to cart</span>}
       </button>
     </div>
   )
