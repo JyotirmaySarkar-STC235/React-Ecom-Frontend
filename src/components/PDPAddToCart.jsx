@@ -1,7 +1,9 @@
 import { useState, useTransition } from 'react'
-import { addToCart } from '../hooks/Cart'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../store/slices/cartSlice'
 
-const PDPAddToCart = ({ maxQuantity = 10 }) => {
+const PDPAddToCart = ({ maxQuantity = 10, product }) => {
+  const dispatch = useDispatch()
   const [quantity, setQuantity] = useState(1)
   const [isPending, startTransition] = useTransition()
 
@@ -9,8 +11,10 @@ const PDPAddToCart = ({ maxQuantity = 10 }) => {
   const increase = () => setQuantity((value) => Math.min(maxQuantity, value + 1))
 
   const handleAddToCart = () => {
+    if (!product?.id) return
+
     startTransition(async () => {
-      await addToCart(quantity)
+      await dispatch(addToCart({ ...product, quantity })).unwrap()
     })
   }
 

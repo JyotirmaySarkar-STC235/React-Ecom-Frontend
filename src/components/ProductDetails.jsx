@@ -8,6 +8,7 @@ import Accordion from './Accordion'
 const ProductDetails = ({ classes = '', productDetails = {} }) => {
   let classList = 'product-details ' + classes
   const { name, id, price, compareAtPrice, color, rating = 0, description, quantity } = productDetails
+  const cartProduct = { id, name, price, compareAtPrice, color }
 
   return (
     <div className={`${classList} flex flex-col gap-4 bg-[#fff5f1] p-4 md:gap-5 md:p-6`}>
@@ -25,7 +26,7 @@ const ProductDetails = ({ classes = '', productDetails = {} }) => {
           Color: <span className="font-medium">{color}</span>
         </p>
       )}
-      <PDPAddToCart maxQuantity={quantity || 10} />
+      <PDPAddToCart maxQuantity={quantity || 10} product={cartProduct} />
       <Accordion heading="Product Details" body={description} />
     </div>
   )
