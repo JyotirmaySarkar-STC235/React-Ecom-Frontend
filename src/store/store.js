@@ -10,6 +10,7 @@ import {
   REGISTER,
 } from 'redux-persist'
 import cartReducer from './slices/cartSlice'
+import overlayReducer from './slices/overlay'
 
 // ponytail: Vite breaks CJS default from redux-persist/lib/storage (getItem is not a function)
 const storage = {
@@ -28,6 +29,7 @@ const cartPersistConfig = {
 export const store = configureStore({
   reducer: {
     cart: persistReducer(cartPersistConfig, cartReducer),
+    overlay: overlayReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
