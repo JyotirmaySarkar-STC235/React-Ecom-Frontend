@@ -1,17 +1,30 @@
 import { CartIcon, ExpandIcon, HeartIcon } from '../utils/icons'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart, selectCartStatus, setProductIdBeingAdded, selectProductIdBeingAdded } from '../store/slices/cartSlice'
 
 const ACTIONS = [
   { label: 'Quick view', Icon: ExpandIcon },
   { label: 'Add to wishlist', Icon: HeartIcon },
 ]
 
+
+
 const formatPrice = (value) =>
   new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value)
 
+
+
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch()
   const { id, name,description, brand, price, compareAtPrice, image, rating = 0 } = product
   const discount = compareAtPrice > price ? Math.round((1 - price / compareAtPrice) * 100) : 0
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product))
+    dispatch(setProductIdBeingAdded(id))
+  }
+  const isLoading = useSelector(selectCartStatus)
+  const productIdBeingAdded = useSelector(selectProductIdBeingAdded)
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-md border border-gray-200 bg-white">
@@ -56,10 +69,11 @@ const ProductCard = ({ product }) => {
         </p>
         <button
           type="button"
+          onClick={() => handleAddToCart(product)}
           className="mt-auto flex items-center justify-center gap-2 rounded-md border border-red-500 px-3 py-2 text-[10px] md:text-xs font-medium text-red-500 uppercase transition-colors hover:bg-red-500 hover:text-white"
         >
           <CartIcon className="size-4" />
-          Add to cart
+          {isLoading === 'loading' && productIdBeingAdded === id ? 'Adding...' : 'Add to cart'}
         </button>
       </div>
     </article>

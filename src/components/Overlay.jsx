@@ -1,14 +1,22 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
-import { selectOverlay } from '../store/slices/overlay'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectDrawerOpen, setDrawerOpen } from '../store/slices/cartSlice'
 
 const Overlay = () => {
-  const isOpen = useSelector(selectOverlay)
+  const isOpen = useSelector(selectDrawerOpen);
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    console.log('isOpen', isOpen)
+    document.body.toggleAttribute('data-overlay-open', isOpen)
+    return () => document.body.removeAttribute('data-overlay-open')
   }, [isOpen])
+
   return (
-    <div className={`overlay fixed h-screen w-screen bg-[#0c0b0b70] z-[999] top-0 left-0 pointer-events-none ${isOpen ? 'block' : 'hidden'}`}></div>
+    <div
+      id="overlay"
+      onClick={() => dispatch(setDrawerOpen(false))}
+      className={`overlay fixed top-0 left-0 z-[1] h-screen w-screen bg-[#0c0b0b70] ${isOpen ? 'block' : 'hidden'}`}
+    />
   )
 }
 

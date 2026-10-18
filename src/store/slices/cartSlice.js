@@ -29,9 +29,17 @@ const cartSlice = createSlice({
   initialState: {
     items: [],
     status: 'idle',
+    productIdBeingAdded: null,
+    drawerOpen: false,
     error: null,
   },
   reducers: {
+    setProductIdBeingAdded: (state, action) => {
+      state.productIdBeingAdded = action.payload
+    },
+    setDrawerOpen: (state, action) => {
+      state.drawerOpen = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -40,6 +48,7 @@ const cartSlice = createSlice({
         state.error = null
       })
       .addCase(addToCart.fulfilled, (state, action) => {
+        console.log('addToCart fulfilled', action.payload)
         const product = action.payload
         const qty = product.quantity ?? 1
         const existing = state.items.find((item) => item.id === product.id)
@@ -98,7 +107,10 @@ const cartSlice = createSlice({
 
 export const selectCartItems = (state) => state.cart.items
 export const selectCartStatus = (state) => state.cart.status
+export const selectProductIdBeingAdded = (state) => state.cart.productIdBeingAdded
 export const selectCartCount = (state) =>
   state.cart.items.reduce((total, item) => total + item.quantity, 0)
-
+export const selectDrawerOpen = (state) => state.cart.drawerOpen
+export const { setProductIdBeingAdded, setDrawerOpen } = cartSlice.actions
 export default cartSlice.reducer
+

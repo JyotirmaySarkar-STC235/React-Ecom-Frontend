@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
 import Overlay from './Overlay'
+import CartDrawer from './CartDrawer'
 
 const Layout = () => {
   return (
@@ -12,6 +13,7 @@ const Layout = () => {
       </main>
       <Footer id="footer" />
       <Overlay />
+      <CartDrawer />
     </>
   )
 }
