@@ -5,6 +5,7 @@ import HeaderNav from './HeaderNav'
 import { CartIcon, ChevronDownIcon, CloseIcon, HeartIcon, LogoIcon, MenuIcon, RocketIcon, SearchIcon } from '../utils/icons'
 import { CATEGORY_LINKS } from '../utils/categories'
 import { selectCartCount, setDrawerOpen } from '../store/slices/cartSlice'
+import { setOverlay } from '../store/slices/overlay'
 
 const NAV_LINKS = [{ to: '/', label: 'Home' }, ...CATEGORY_LINKS]
 
@@ -88,6 +89,7 @@ const Header = () => {
   }
 
   const handleCartButtonClick = () => {
+    dispatch(setOverlay(true))
     dispatch(setDrawerOpen(true))
   }
 

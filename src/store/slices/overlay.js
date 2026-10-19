@@ -7,7 +7,6 @@ const overlaySlice = createSlice({
   },
   reducers: {
     setOverlay: (state, action) => {
-        console.log('setOverlay', action.payload)
       state.isOpen = action.payload
     },
   },

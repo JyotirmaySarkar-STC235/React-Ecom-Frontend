@@ -7,12 +7,17 @@ import {
 } from '../store/slices/cartSlice'
 import { CloseIcon } from '../utils/icons'
 import CartDrawerProductCard from './CartDrawerProductCard'
+import { setOverlay } from '../store/slices/overlay'
 
 const CartDrawer = () => {
   const dispatch = useDispatch()
   const isOpen = useSelector(selectDrawerOpen)
   const items = useSelector(selectCartItems)
   const count = useSelector(selectCartCount)
+  const onClose = () => {
+    dispatch(setDrawerOpen(false))
+    dispatch(setOverlay(false))
+  }
 
   return (
     <section
@@ -27,7 +32,7 @@ const CartDrawer = () => {
           type="button"
           className="p-1 text-gray-800 hover:text-red-500"
           aria-label="Close cart"
-          onClick={() => dispatch(setDrawerOpen(false))}
+          onClick={onClose}
         >
           <CloseIcon className="size-6" />
         </button>

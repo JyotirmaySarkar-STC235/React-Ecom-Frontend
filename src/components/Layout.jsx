@@ -3,6 +3,7 @@ import Header from './Header'
 import Footer from './Footer'
 import Overlay from './Overlay'
 import CartDrawer from './CartDrawer'
+import ProductDetailsPopup from './ProductDetailsPopup'
 
 const Layout = () => {
   return (
@@ -13,6 +14,7 @@ const Layout = () => {
       </main>
       <Footer id="footer" />
       <Overlay />
+      <ProductDetailsPopup />
       <CartDrawer />
     </>
   )

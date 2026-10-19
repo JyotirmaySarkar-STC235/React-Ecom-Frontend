@@ -48,7 +48,6 @@ const cartSlice = createSlice({
         state.error = null
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        console.log('addToCart fulfilled', action.payload)
         const product = action.payload
         const qty = product.quantity ?? 1
         const existing = state.items.find((item) => item.id === product.id)
