@@ -1,15 +1,22 @@
+import { lazy, Suspense } from "react";
 import HeroSlider from "../components/HeroSlider";
 import CategorySlider from "../components/CategorySlider";
 import FreeShippingBanner from "../components/FreeShippingBanner";
-import StoryBanner from "../components/StoryBanner";
 import { CATEGORY_LINKS } from "../utils/categories";
 import { FashionCollection, FootwearCollection, BagsCollection } from "../utils/collections";
-import CollectionProducts from "../components/CollectionProducts";
-import TabSlider from "../components/TabSlider";
+
+const StoryBanner = lazy(() => import("../components/StoryBanner"));
+const TabSlider = lazy(() => import("../components/TabSlider"));
+const CollectionProducts = lazy(() => import("../components/CollectionProducts"));
 
 // ponytail: label-only tabs render skeletons until real collection data (with products) is passed in.
 const POPULAR_TABS = CATEGORY_LINKS.slice(1).map(({ label }) => ({ id: `${label.toLowerCase()}-collection`, label }));
 
+const SectionFallback = () => (
+  <div className="px-4 py-8" aria-busy="true" aria-label="Loading section">
+    <div className="h-40 animate-pulse rounded-md bg-gray-100" />
+  </div>
+);
 
 const HOME_SLIDES = [
   { desktop: "/desktop-banner-1.webp", mobile: "/mobile-banner-1.webp", alt: "Hero Slider Image 1" },
@@ -60,11 +67,21 @@ const Home = () => {
       <HeroSlider id="home-hero-slider" slides={HOME_SLIDES} options={HOME_SLIDER_OPTIONS} />
       <CategorySlider id="home-category-slider" categories={CATEGORY_LINKS} />
       <FreeShippingBanner id="home-free-shipping-banner" />
-      <StoryBanner id="home-story-banner" {...STORY_BANNERS} />
-      <TabSlider id="home-popular-products" firstTabColection={FashionCollection} reseCollectionHandles={POPULAR_TABS} />
-      <CollectionProducts id={`home-${FashionCollection.id}`} collection={FashionCollection} />
-      <CollectionProducts id={`home-${BagsCollection.id}`} collection={BagsCollection} />
-      <CollectionProducts id={`home-${FootwearCollection.id}`} collection={FootwearCollection} />
+      <Suspense fallback={<SectionFallback />}>
+        <StoryBanner id="home-story-banner" {...STORY_BANNERS} />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <TabSlider id="home-popular-products" firstTabColection={FashionCollection} reseCollectionHandles={POPULAR_TABS} />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <CollectionProducts id={`home-${FashionCollection.id}`} collection={FashionCollection} />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <CollectionProducts id={`home-${BagsCollection.id}`} collection={BagsCollection} />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <CollectionProducts id={`home-${FootwearCollection.id}`} collection={FootwearCollection} />
+      </Suspense>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { useTransition } from 'react'
+import { useCallback, useTransition } from 'react'
 import { useDispatch } from 'react-redux'
 import { ChevronDownIcon, HeartIcon, TrashIcon } from '../utils/icons'
 import { removeFromCart, updateQuantity } from '../store/slices/cartSlice'
@@ -32,7 +32,7 @@ const CartDrawerProductCard = ({ product }) => {
   const showColor = Boolean(color)
   const showBrand = Boolean(brand) && !showSize && !showColor
 
-  const handleDecrease = () => {
+  const handleDecrease = useCallback(() => {
     if (!id) return
     if (quantity <= 1) {
       startTransition(async () => {
@@ -43,21 +43,21 @@ const CartDrawerProductCard = ({ product }) => {
     startTransition(async () => {
       await dispatch(updateQuantity({ id, quantity: quantity - 1 })).unwrap()
     })
-  }
+  }, [dispatch, id, quantity, startTransition])
 
-  const handleIncrease = () => {
+  const handleIncrease = useCallback(() => {
     if (!id) return
     startTransition(async () => {
       await dispatch(updateQuantity({ id, quantity: quantity + 1 })).unwrap()
     })
-  }
+  }, [dispatch, id, quantity, startTransition])
 
-  const handleRemove = () => {
+  const handleRemove = useCallback(() => {
     if (!id) return
     startTransition(async () => {
       await dispatch(removeFromCart(id)).unwrap()
     })
-  }
+  }, [dispatch, id, startTransition])
 
   return (
     <article className="flex gap-3 border-b border-gray-200 py-5" aria-busy={isPending}>

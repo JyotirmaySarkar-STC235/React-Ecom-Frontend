@@ -1,47 +1,46 @@
+import { useCallback } from 'react'
 import { CartIcon, ExpandIcon, HeartIcon } from '../utils/icons'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, selectCartStatus, setProductIdBeingAdded, selectProductIdBeingAdded } from '../store/slices/cartSlice'
 import { setProductPopupOpen, setProduct } from '../store/slices/productPopup'
-import {setOverlay} from '../store/slices/overlay'
+import { setOverlay } from '../store/slices/overlay'
 
 const ACTIONS = [
-  { label: 'Quick view', Icon: ExpandIcon, uniqueKey: 'quick-view'},
-  { label: 'Add to wishlist', Icon: HeartIcon, uniqueKey: 'add-to-wishlist'},
+  { label: 'Quick view', Icon: ExpandIcon, uniqueKey: 'quick-view' },
+  { label: 'Add to wishlist', Icon: HeartIcon, uniqueKey: 'add-to-wishlist' },
 ]
-
-
 
 const formatPrice = (value) =>
   new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value)
 
-
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch()
-  const { id, name,description, brand, price, compareAtPrice, image, rating = 0 } = product
+  const { id, name, description, brand, price, compareAtPrice, image, rating = 0 } = product
   const discount = compareAtPrice > price ? Math.round((1 - price / compareAtPrice) * 100) : 0
-  const handleAddToCart = (product) => {
-    dispatch(addToCart(product))
-    dispatch(setProductIdBeingAdded(id))
-  }
   const isLoading = useSelector(selectCartStatus)
   const productIdBeingAdded = useSelector(selectProductIdBeingAdded)
 
-  const handleQuickView = () => {
+  const handleAddToCart = useCallback(() => {
+    dispatch(addToCart(product))
+    dispatch(setProductIdBeingAdded(id))
+  }, [dispatch, product, id])
+
+  const handleQuickView = useCallback(() => {
     dispatch(setOverlay(true))
     dispatch(setProductPopupOpen(true))
     dispatch(setProduct(product))
-  }
+  }, [dispatch, product])
 
-  const handleAddToWishlist = () => {
-    console.log("Add to wishlist")
-  }
+  const handleAddToWishlist = useCallback(() => {
+    console.log('Add to wishlist')
+  }, [])
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-md border border-gray-200 bg-white">
       <div className="relative aspect-square bg-gray-100">
         <Link to={`/products/${id}`}>
-        <img src={image} alt={name} className="absolute inset-0 size-full object-cover" loading="lazy" decoding="async" />
+          <img src={image} alt={name} className="absolute inset-0 size-full object-cover" loading="lazy" decoding="async" />
         </Link>
         {discount > 0 && (
           <span className="absolute top-2 left-2 rounded-md bg-red-500 px-1.5 py-0.5 text-xs font-medium text-white">
@@ -81,7 +80,7 @@ const ProductCard = ({ product }) => {
         </p>
         <button
           type="button"
-          onClick={() => handleAddToCart(product)}
+          onClick={handleAddToCart}
           className="mt-auto flex items-center justify-center gap-2 rounded-md border border-red-500 px-3 py-2 text-[10px] lg:text-xs font-medium text-red-500 uppercase transition-colors hover:bg-red-500 hover:text-white"
         >
           <CartIcon className="size-4" />
