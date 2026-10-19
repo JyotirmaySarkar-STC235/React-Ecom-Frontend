@@ -76,10 +76,10 @@ const ProductDetailsPopup = () => {
         isOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
       }`}
     >
-      <div className="relative grid max-h-[90vh] w-full max-w-4xl grid-cols-1 overflow-hidden rounded-2xl bg-white shadow-xl md:grid-cols-2">
+      <div className="relative overflow-y-auto grid max-h-[90vh] w-full max-w-4xl grid-cols-1 overflow-hidden rounded-2xl bg-white shadow-xl md:grid-cols-2">
         <button
           type="button"
-          className="absolute top-3 right-3 z-10 rounded-full p-1.5 text-gray-700 transition-colors hover:bg-gray-100 hover:text-red-500"
+          className="absolute top-3 right-5 z-10 rounded-full p-1.5 text-gray-700 transition-colors hover:bg-gray-100 hover:text-red-500"
           aria-label="Close product details"
           onClick={onClose}
         >
@@ -106,7 +106,7 @@ const ProductDetailsPopup = () => {
                 )}
                 <button
                   type="button"
-                  className="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-white text-gray-700 shadow-md transition-colors hover:text-red-500"
+                  className="absolute top-6 right-1 flex size-9 items-center justify-center rounded-full bg-white text-gray-700 shadow-md transition-colors hover:text-red-500"
                   aria-label={`Add ${name} to wishlist`}
                 >
                   <HeartIcon className="size-5" />
@@ -177,7 +177,7 @@ const ProductDetailsPopup = () => {
 
               <div className="mt-auto flex flex-col gap-4 pt-2">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-11 items-center rounded-full bg-gray-100 px-3">
+                  <div className="flex h-11 items-center rounded-full bg-gray-100 px-3 border border-gray-500">
                     <button
                       type="button"
                       className="flex size-8 items-center justify-center text-lg text-gray-800 disabled:opacity-40"

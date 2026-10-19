@@ -1,4 +1,7 @@
+import { useTransition } from 'react'
+import { useDispatch } from 'react-redux'
 import { ChevronDownIcon, HeartIcon, TrashIcon } from '../utils/icons'
+import { removeFromCart, updateQuantity } from '../store/slices/cartSlice'
 
 const formatPrice = (value) =>
   new Intl.NumberFormat('en-IN', {
@@ -11,7 +14,10 @@ const pillClass =
   'inline-flex items-center gap-1.5 rounded-full border border-gray-300 px-3 py-1 text-xs font-medium uppercase text-gray-800'
 
 const CartDrawerProductCard = ({ product }) => {
+  const dispatch = useDispatch()
+  const [isPending, startTransition] = useTransition()
   const {
+    id,
     name = '',
     description = '',
     image = '',
@@ -26,8 +32,35 @@ const CartDrawerProductCard = ({ product }) => {
   const showColor = Boolean(color)
   const showBrand = Boolean(brand) && !showSize && !showColor
 
+  const handleDecrease = () => {
+    if (!id) return
+    if (quantity <= 1) {
+      startTransition(async () => {
+        await dispatch(removeFromCart(id)).unwrap()
+      })
+      return
+    }
+    startTransition(async () => {
+      await dispatch(updateQuantity({ id, quantity: quantity - 1 })).unwrap()
+    })
+  }
+
+  const handleIncrease = () => {
+    if (!id) return
+    startTransition(async () => {
+      await dispatch(updateQuantity({ id, quantity: quantity + 1 })).unwrap()
+    })
+  }
+
+  const handleRemove = () => {
+    if (!id) return
+    startTransition(async () => {
+      await dispatch(removeFromCart(id)).unwrap()
+    })
+  }
+
   return (
-    <article className="flex gap-3 border-b border-gray-200 py-5">
+    <article className="flex gap-3 border-b border-gray-200 py-5" aria-busy={isPending}>
       <div className="relative size-28 shrink-0 overflow-hidden rounded-md bg-gray-100 sm:size-32">
         <img
           src={image}
@@ -81,8 +114,10 @@ const CartDrawerProductCard = ({ product }) => {
           <div className="flex h-9 items-center border border-gray-800">
             <button
               type="button"
-              className="flex size-9 items-center justify-center text-lg text-gray-800"
+              className="flex size-9 items-center justify-center text-lg text-gray-800 disabled:opacity-40"
               aria-label={`Decrease quantity of ${name}`}
+              onClick={handleDecrease}
+              disabled={isPending}
             >
               −
             </button>
@@ -91,8 +126,10 @@ const CartDrawerProductCard = ({ product }) => {
             </span>
             <button
               type="button"
-              className="flex size-9 items-center justify-center text-lg text-gray-800"
+              className="flex size-9 items-center justify-center text-lg text-gray-800 disabled:opacity-40"
               aria-label={`Increase quantity of ${name}`}
+              onClick={handleIncrease}
+              disabled={isPending}
             >
               +
             </button>
@@ -100,10 +137,19 @@ const CartDrawerProductCard = ({ product }) => {
 
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wide text-red-600 uppercase"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wide text-red-600 uppercase disabled:opacity-40"
             aria-label={`Remove ${name} from cart`}
+            onClick={handleRemove}
+            disabled={isPending}
           >
-            <TrashIcon className="size-4" />
+            {isPending ? (
+              <span
+                className="size-4 animate-spin rounded-full border-2 border-red-600 border-t-transparent"
+                aria-hidden="true"
+              />
+            ) : (
+              <TrashIcon className="size-4" />
+            )}
             Remove
           </button>
         </div>

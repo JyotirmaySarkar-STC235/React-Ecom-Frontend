@@ -12,6 +12,12 @@ export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (pro
   return productId
 })
 
+// ponytail: swap wait for real PATCH /cart/:id later
+export const updateQuantity = createAsyncThunk('cart/updateQuantity', async ({ id, quantity }) => {
+  await wait(1000) // api call in real case
+  return { id, quantity }
+})
+
 export const clearCart = createAsyncThunk('cart/clearCart', async ()=>{
   await wait(1000) // api call in real case
   return null
@@ -74,6 +80,29 @@ const cartSlice = createSlice({
       .addCase(removeFromCart.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message ?? 'Failed to remove from cart'
+      })
+      // Update quantity
+      .addCase(updateQuantity.pending, (state) => {
+        state.status = 'loading'
+        state.error = null
+      })
+      .addCase(updateQuantity.fulfilled, (state, action) => {
+        const { id, quantity } = action.payload
+        const item = state.items.find((entry) => entry.id === id)
+        if (!item) {
+          state.status = 'idle'
+          return
+        }
+        if (quantity <= 0) {
+          state.items = state.items.filter((entry) => entry.id !== id)
+        } else {
+          item.quantity = quantity
+        }
+        state.status = 'idle'
+      })
+      .addCase(updateQuantity.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message ?? 'Failed to update quantity'
       })
       // Clear cart
       .addCase(clearCart.pending, (state) => {
