@@ -27,7 +27,7 @@ const CollectionProducts = ({ id, collection, showLabel = true }) => {
       <Swiper modules={[Navigation]} navigation spaceBetween={12} breakpoints={PRODUCT_SLIDER_BREAKPOINTS}>
         {products.map((product, index) => (
           <SwiperSlide key={`${product.id}-${index}`} className="h-auto!">
-            <ProductCard product={product} />
+            <ProductCard product={product} addToCartQuantity={1}/>
           </SwiperSlide>
         ))}
       </Swiper>

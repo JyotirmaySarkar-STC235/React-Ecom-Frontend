@@ -55,7 +55,7 @@ const cartSlice = createSlice({
       })
       .addCase(addToCart.fulfilled, (state, action) => {
         const product = action.payload
-        const qty = product.quantity ?? 1
+        const qty = product.addToCartQuantity ?? 1
         const existing = state.items.find((item) => item.id === product.id)
         if (existing) {
           existing.quantity += qty

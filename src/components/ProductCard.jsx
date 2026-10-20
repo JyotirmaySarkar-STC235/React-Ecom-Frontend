@@ -14,15 +14,15 @@ const ACTIONS = [
 const formatPrice = (value) =>
   new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value)
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, addQuantity = 1 }) => {
   const dispatch = useDispatch()
-  const { id, name, description, brand, price, compareAtPrice, image, rating = 0 } = product
+  const { id, name, description, brand, price, compareAtPrice, image, rating = 0, addToCartQuantity = addQuantity} = product
   const discount = compareAtPrice > price ? Math.round((1 - price / compareAtPrice) * 100) : 0
   const isLoading = useSelector(selectCartStatus)
   const productIdBeingAdded = useSelector(selectProductIdBeingAdded)
 
   const handleAddToCart = useCallback(() => {
-    dispatch(addToCart(product))
+    dispatch(addToCart({...product, addToCartQuantity}))
     dispatch(setProductIdBeingAdded(id))
   }, [dispatch, product, id])
 
